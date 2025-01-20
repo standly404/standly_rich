@@ -1,7 +1,7 @@
 logger = {}
 
 function logger.debug(message)
-  local resource <const> = cache.resource
+  local resource <const> = GetCurrentResourceName()
 
   if type(message) == "table" then
     return print(("[%s] [DEBUG]: %s"):format(resource, json.encode(message, { indent=true })))
