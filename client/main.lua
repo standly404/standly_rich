@@ -90,7 +90,8 @@ end
 
 setupApp(Config.discord.appId, Config.discord.displayOptions)
 Wait(10000)
-updateDiscordPresence("test update")
+
+updateDiscordPresence(nil, nil, nil, "other", "other")
 
 ---Exports
 exports("updateDiscordPresence", updateDiscordPresence)
