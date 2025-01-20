@@ -8,10 +8,10 @@ Config.discord = {
     ["mainText"] = "Main Text", -- The text displayed in the main rich presence
     ["smallImageText"] = "Small Image Text",-- The text displayed in the small image
     ["imageText"] = "Big Image Text", -- The text displayed in the big image
-    ["smallImage"] = "other", -- The image displayed in the small image, make sure its the asset name and not a image link
-    ["bigImage"] = "other", -- The image displayed in the big image, make sure its the asset name and not a image link
+    ["smallImage"] = "", -- The image displayed in the small image, make sure its the asset name and not a image link
+    ["bigImage"] = "", -- The image displayed in the big image, make sure its the asset name and not a image link
     ["buttons"] = { -- Button limit: 2
-      { label = "", url = ""},
+      { label = "test", url = "https://discord.gg/test"},
       -- { label = "", url = ""}
     }
   }
