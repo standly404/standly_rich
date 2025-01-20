@@ -91,7 +91,7 @@ end
 setupApp(Config.discord.appId, Config.discord.displayOptions)
 Wait(10000)
 
-updateDiscordPresence(nil, nil, nil, "github", "github")
+updateDiscordPresence(nil, nil, nil, "other", "github")
 
 ---Exports
 exports("updateDiscordPresence", updateDiscordPresence)
