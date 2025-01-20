@@ -89,6 +89,8 @@ function updateDiscordPresence(mainText, smallImageText, imageText, smallImage, 
 end
 
 setupApp(Config.discord.appId, Config.discord.displayOptions)
+Wait(10000)
+updateDiscordPresence("test update")
 
 ---Exports
 exports("updateDiscordPresence", updateDiscordPresence)
