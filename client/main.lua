@@ -2,6 +2,10 @@ local appId <const> = Config.discord.appId
 
 if #appId <= 0 then return end
 
+function updateApp()
+  SetRichPresence("test")
+end
+
 ---Setup function for the rich presence
 ---@param appId string
 ---@param displayOptions table
@@ -28,3 +32,4 @@ function setupApp(appId, displayOptions)
 end
 
 setupApp(Config.discord.appId, Config.discord.displayOptions)
+updateApp()
