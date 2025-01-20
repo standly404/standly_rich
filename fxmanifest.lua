@@ -4,5 +4,5 @@ lua54 "yes"
 
 author "Standly"
 
-client_script "main.lua"
+client_script "client/main.lua"
 shared_script "shared/*.lua"
