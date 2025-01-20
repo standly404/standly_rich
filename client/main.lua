@@ -2,8 +2,12 @@ local appId <const> = Config.discord.appId
 
 if #appId <= 0 then return end
 
-function updateApp()
-  SetRichPresence("test")
+local isAppInitilized = false
+
+function updatePresence(presence)
+  assert(presence, ("Invalid Arguments - presence: "):format(presence))
+
+  SetRichPresence(presence)
 end
 
 ---Setup function for the rich presence
@@ -29,7 +33,12 @@ function setupApp(appId, displayOptions)
   if #displayOptions["text"] > 0 then
     SetDiscordRichPresenceAssetText(displayOptions["text"])
   end
+
+  SetRichPresence("test")
+  isAppInitilized = true
 end
 
 setupApp(Config.discord.appId, Config.discord.displayOptions)
-updateApp()
+
+Wait(10000)
+updatePresence()
