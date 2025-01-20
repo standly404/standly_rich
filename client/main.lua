@@ -50,6 +50,20 @@ function setupApp(appId, displayOptions)
     SetDiscordRichPresenceAssetText(options["text"])
   end
 
+  if displayOptions["buttons"] then
+    if #displayOptions["buttons"] > 2 then
+      logger.error("Discord Rich Presence only supports up to 2 buttons")
+    else
+      for i = 1, #displayOptions["buttons"] do
+        local button = displayOptions["buttons"][i]
+
+        if #button.label > 0 and #button.url > 0 then
+          SetDiscordRichPresenceAction(i - 1, button.label, button.url)
+        end
+      end
+    end
+  end
+
   isAppInitialized = true
 
   return true

@@ -10,14 +10,8 @@ Config.discord = {
     ["text"] = "",
     ["asset"] = "",
     ["buttons"] = {
-      ["button1"] = {
-        label = "",
-        url = ""
-      },
-      ["button2"] = {
-        label = "",
-        url = ""
-      }
+      { label = "", url = ""},
+      { label = "", url = ""},
     }
   }
 }
