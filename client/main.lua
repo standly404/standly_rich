@@ -5,6 +5,11 @@ if #appId <= 0 then return end
 local isAppInitilized = false
 
 function updatePresence(presence)
+  if not isAppInitilized then 
+    logger.debug("Could not update presence when the app is not setup")
+    return 
+  end
+
   assert(presence, ("Invalid Arguments - presence: "):format(presence))
 
   SetRichPresence(presence)
@@ -35,10 +40,8 @@ function setupApp(appId, displayOptions)
   end
 
   SetRichPresence("test")
+
   isAppInitilized = true
 end
-
+updatePresence()
 setupApp(Config.discord.appId, Config.discord.displayOptions)
-
-Wait(10000)
-updatePresence("testing")
