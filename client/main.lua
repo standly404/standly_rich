@@ -2,12 +2,18 @@ local appId <const> = Config.discord.appId
 
 if #appId <= 0 then return end
 
-local isAppInitilized = false
+local isAppInitialized = false
 
+---Update the rich presence
+---@param presence string
 function updatePresence(presence)
-  if not isAppInitilized then logger.error("Could not update presence when the app was not set up.") return end
+  if not presence then
+    return logger.error("Presence cannot be nil or empty")
+  end
 
-  assert(presence, ("Invalid Arguments - presence: "):format(presence))
+  if not isAppInitialized then
+    return logger.error("Could not update presence when the app is not set up.")
+  end
 
   SetRichPresence(presence)
 end
@@ -16,29 +22,37 @@ end
 ---@param appId string
 ---@param displayOptions table
 function setupApp(appId, displayOptions)
+  if not appId or #appId <= 0 then
+    return logger.error("Invalid Discord App ID"), false
+  end
+
+  if not displayOptions then
+    return logger.error("Display options are required"), false
+  end
+
   local displayOptions <const> = displayOptions
 
   SetDiscordAppId(appId)
 
   if #displayOptions["small-asset"] > 0 then
-    SetDiscordRichPresenceAssetSmall(displayOptions["small-asset"])
+    SetDiscordRichPresenceAssetSmall(options["small-asset"])
   end
 
   if #displayOptions["small-text"] > 0 then
-    SetDiscordRichPresenceAssetSmallText(displayOptions["small-text"])
+    SetDiscordRichPresenceAssetSmallText(options["small-text"])
   end
 
   if #displayOptions["asset"] > 0 then
-    SetDiscordRichPresenceAsset(displayOptions["asset"])
+    SetDiscordRichPresenceAsset(options["asset"])
   end
 
   if #displayOptions["text"] > 0 then
-    SetDiscordRichPresenceAssetText(displayOptions["text"])
+    SetDiscordRichPresenceAssetText(options["text"])
   end
 
-  SetRichPresence("test")
+  isAppInitialized = true
 
-  isAppInitilized = true
+  return true
 end
-updatePresence()
+
 setupApp(Config.discord.appId, Config.discord.displayOptions)
