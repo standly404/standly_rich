@@ -5,10 +5,7 @@ if #appId <= 0 then return end
 local isAppInitilized = false
 
 function updatePresence(presence)
-  if not isAppInitilized then 
-    logger.debug("Could not update presence when the app is not setup")
-    return 
-  end
+  if not isAppInitilized then logger.error("Could not update presence when the app was not set up.") return end
 
   assert(presence, ("Invalid Arguments - presence: "):format(presence))
 
