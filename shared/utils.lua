@@ -1,11 +1,19 @@
 logger = {}
 
+local resource <const> = GetCurrentResourceName()
+
 function logger.debug(message)
-  local resource <const> = GetCurrentResourceName()
+  if not Config.log then return end
 
   if type(message) == "table" then
-    return print(("[%s] [DEBUG]: %s"):format(resource, json.encode(message, { indent=true })))
+    return print(("[%s] ^3[DEBUG]^7: %s"):format(resource, json.encode(message, { indent=true })))
   end
   
-  return print(("[%s] [DEBUG]: %s"):format(resource, message))
+  return print(("[%s] ^3[DEBUG]^7: %s"):format(resource, message))
+end
+
+function logger.error(message)
+  if not Config.log then return end
+
+  return print(("[%s] ^1[ERROR]^7: %s"):format(resource, message))
 end
