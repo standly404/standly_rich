@@ -11,7 +11,7 @@ Config.discord = {
     ["smallImage"] = "", -- The image displayed in the small image, make sure its the asset name and not a image link
     ["bigImage"] = "", -- The image displayed in the big image, make sure its the asset name and not a image link
     ["buttons"] = { -- Button limit: 2
-      { label = "test", url = "https://discord.gg/test"},
+      { label = "", url = ""},
       -- { label = "", url = ""}
     }
   }
