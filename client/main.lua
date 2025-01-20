@@ -41,4 +41,4 @@ end
 setupApp(Config.discord.appId, Config.discord.displayOptions)
 
 Wait(10000)
-updatePresence()
+updatePresence("testing")
