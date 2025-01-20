@@ -1,26 +1,8 @@
-local appId <const> = Config.discord.appId
-
-if #appId <= 0 then return end
-
 local isAppInitialized = false
 
----Update the rich presence
----@param presence string
-function updatePresence(presence)
-  if not presence then
-    return logger.error("Presence cannot be nil or empty")
-  end
-
-  if not isAppInitialized then
-    return logger.error("Could not update presence when the app is not set up.")
-  end
-
-  SetRichPresence(presence)
-end
-
 ---Setup function for the rich presence
----@param appId string
----@param displayOptions table
+---@param appId string -- The App ID to setup
+---@param displayOptions table -- The display options to show in presence
 function setupApp(appId, displayOptions)
   if not appId or #appId <= 0 then
     return logger.error("Invalid Discord App ID"), false
@@ -33,40 +15,80 @@ function setupApp(appId, displayOptions)
   local displayOptions <const> = displayOptions
 
   SetDiscordAppId(appId)
-
-  if #displayOptions["small-asset"] > 0 then
-    SetDiscordRichPresenceAssetSmall(options["small-asset"])
+  
+  if #displayOptions["mainText"] > 0 then
+    SetRichPresence(displayOptions["mainText"])
   end
 
-  if #displayOptions["small-text"] > 0 then
-    SetDiscordRichPresenceAssetSmallText(options["small-text"])
+  if #displayOptions["smallImageText"] > 0 then
+    SetDiscordRichPresenceAssetSmallText(displayOptions["smallImageText"])
   end
 
-  if #displayOptions["asset"] > 0 then
-    SetDiscordRichPresenceAsset(options["asset"])
+  if #displayOptions["imageText"] > 0 then
+    SetDiscordRichPresenceAssetText(displayOptions["imageText"])
   end
 
-  if #displayOptions["text"] > 0 then
-    SetDiscordRichPresenceAssetText(options["text"])
+  if #displayOptions["smallImage"] > 0 then
+    SetDiscordRichPresenceAssetSmall(displayOptions["smallImage"])
   end
 
-  if displayOptions["buttons"] then
-    if #displayOptions["buttons"] > 2 then
-      logger.error("Discord Rich Presence only supports up to 2 buttons")
-    else
-      for i = 1, #displayOptions["buttons"] do
-        local button = displayOptions["buttons"][i]
+  if #displayOptions["bigImage"] > 0 then
+    SetDiscordRichPresenceAsset(displayOptions["bigImage"])
+  end
 
-        if #button.label > 0 and #button.url > 0 then
-          SetDiscordRichPresenceAction(i - 1, button.label, button.url)
-        end
-      end
+  local buttons <const> = displayOptions["buttons"]
+
+  if not buttons then goto initialize end
+
+  if #buttons > 2 then
+    logger.error("Discord Rich Presence only supports up to 2 buttons")
+  else
+    for i = 1, #buttons do
+      local button = buttons[i]
+
+      SetDiscordRichPresenceAction(i - 1, button.label, button.url)
     end
   end
 
+  ::initialize::
   isAppInitialized = true
 
   return true
 end
 
+---Update the rich presence
+---@param mainText string | nil -- The text displayed in the main rich presence
+---@param smallImageText string | nil -- The text displayed in the small image
+---@param imageText string | nil -- The text displayed in the big image
+---@param smallImage string | nil -- The image displayed in the small image
+---@param bigImage string | nil -- The image displayed in the big image
+function updateDiscordPresence(mainText, smallImageText, imageText, smallImage, bigImage)
+  if not isAppInitialized then
+    return logger.error("Could not update presence when the app is not set up.")
+  end
+
+  if mainText then
+    SetRichPresence(mainText)
+  end
+
+  if smallImageText then
+    SetDiscordRichPresenceAssetSmallText(smallImageText)
+  end
+
+  if imageText then
+    SetDiscordRichPresenceAssetText(imageText)
+  end
+
+  if smallImage then
+    SetDiscordRichPresenceAssetSmall(smallImage)
+  end
+
+  if bigImage then
+    SetDiscordRichPresenceAsset(bigImage)
+  end
+end
+
 setupApp(Config.discord.appId, Config.discord.displayOptions)
+
+---Exports
+exports("updateDiscordPresence", updateDiscordPresence)
